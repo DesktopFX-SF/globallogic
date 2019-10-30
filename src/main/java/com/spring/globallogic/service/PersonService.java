@@ -56,7 +56,7 @@ public class PersonService {
 			return new ResponseEntity<Result>(result, result.getStatusCode());
 		}
 		
-		validateEmail(person.getEmail());				
+		validateEmail(person.getEmail(), person.getId());				
 		if(result.getStatus()== false) {			
 			return new ResponseEntity<Result>(result, result.getStatusCode());
 		}
@@ -87,7 +87,7 @@ public class PersonService {
 			return new ResponseEntity<Result>(result, result.getStatusCode());
 		}
 		
-		validateEmail(person.getEmail());				
+		validateEmail(person.getEmail(), person.getId());				
 		if(result.getStatus()== false) {			
 			return new ResponseEntity<Result>(result, result.getStatusCode());
 		}		
@@ -134,13 +134,23 @@ public class PersonService {
 		return new ResponseEntity<Result>(result, result.getStatusCode());
 	}
 	
-	private void validateEmail(String email) {
+	private void validateEmail(String email, Integer vId) {
+		/*
+		 * vId
+		 * 1 : register.
+		 * 2 : update.
+		 */
 		String 	message = "";
 		boolean vBand 	= true;
 		Person validateEmail = getPersonEmail(email);
-		if(validateEmail != null) {		
+		if(validateEmail != null) {	
 			message = "El correo ya esta registrado.";
-			vBand = false;			
+			vBand = false;	
+			if (validateEmail.getId() == vId) {
+				message = "";
+				vBand = true;
+			}
+					
 		}		
 		result.setMessage(message);
 		result.setStatus(vBand);				
