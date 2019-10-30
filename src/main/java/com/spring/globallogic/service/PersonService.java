@@ -76,7 +76,7 @@ public class PersonService {
 		personres.setModified(person.getModified());
 		personres.setToken(person.getToken());
 		
-		return new ResponseEntity<PersonRes>(personres, HttpStatus.OK);
+		return new ResponseEntity<PersonRes>(personres, HttpStatus.CREATED);
 	}
 	
 	public ResponseEntity<?> updatePerson(Integer id, Person person) {
